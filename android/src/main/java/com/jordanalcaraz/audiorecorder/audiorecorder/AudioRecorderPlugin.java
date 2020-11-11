@@ -108,7 +108,7 @@ public class AudioRecorderPlugin implements MethodCallHandler {
     mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
     // new settings
     mRecorder.setAudioEncodingBitRate(1024000);
-    mRecorder.setAudioSamplingRate(44100)
+    mRecorder.setAudioSamplingRate(44100);
 
     try {
       mRecorder.prepare();
