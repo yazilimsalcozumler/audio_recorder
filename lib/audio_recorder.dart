@@ -12,7 +12,10 @@ class AudioRecorder {
   static LocalFileSystem fs = LocalFileSystem();
 
   static Future start(
-      {String path, AudioOutputFormat audioOutputFormat}) async {
+      {String path,
+      AudioOutputFormat audioOutputFormat,
+      int bitRate,
+      int samplingInHz}) async {
     String extension;
     if (path != null) {
       if (audioOutputFormat != null) {
@@ -40,8 +43,12 @@ class AudioRecorder {
     } else {
       extension = ".m4a"; // default value
     }
-    return _channel
-        .invokeMethod('start', {"path": path, "extension": extension});
+    return _channel.invokeMethod('start', {
+      "path": path,
+      "extension": extension,
+      "bitRate": bitRate,
+      "samplingInHz": samplingInHz
+    });
   }
 
   static Future<Recording> stop() async {
