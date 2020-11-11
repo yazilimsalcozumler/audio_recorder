@@ -27,6 +27,8 @@ public class AudioRecorderPlugin implements MethodCallHandler {
   private static final String LOG_TAG = "AudioRecorder";
   private MediaRecorder mRecorder = null;
   private static String mFilePath = null;
+  private static int mBitRate = null;
+  private static int mSamplingInHz = null;
   private Date startTime = null;
   private String mExtension = "";
   private WavRecorder wavRecorder;
@@ -57,6 +59,12 @@ public class AudioRecorderPlugin implements MethodCallHandler {
           mFilePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + fileName + mExtension;
         }
         Log.d(LOG_TAG, mFilePath);
+
+        if(call.argument("bitRate")!=null)
+          mBitRate = call.argument("bitRate");
+        if(call.argument("samplingInHz")!=null)
+          mSamplingInHz = call.argument("samplingInHz");
+
         startRecording();
         isRecording = true;
         result.success(null);
@@ -106,9 +114,11 @@ public class AudioRecorderPlugin implements MethodCallHandler {
     mRecorder.setOutputFormat(getOutputFormatFromString(mExtension));
     mRecorder.setOutputFile(mFilePath);
     mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
-    // new settings
-    mRecorder.setAudioEncodingBitRate(1024000);
-    mRecorder.setAudioSamplingRate(44100);
+
+    if(mBitRate != null)
+    mRecorder.setAudioEncodingBitRate(mBitRate);
+    if(mSamplingInHz != null)
+      mRecorder.setAudioSamplingRate(mSamplingInHz);
 
     try {
       mRecorder.prepare();
