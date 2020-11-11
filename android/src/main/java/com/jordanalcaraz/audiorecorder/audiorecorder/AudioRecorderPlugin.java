@@ -27,8 +27,8 @@ public class AudioRecorderPlugin implements MethodCallHandler {
   private static final String LOG_TAG = "AudioRecorder";
   private MediaRecorder mRecorder = null;
   private static String mFilePath = null;
-  private static int mBitRate = null;
-  private static int mSamplingInHz = null;
+  private static int mBitRate = 0;
+  private static int mSamplingInHz = 0;
   private Date startTime = null;
   private String mExtension = "";
   private WavRecorder wavRecorder;
@@ -115,9 +115,9 @@ public class AudioRecorderPlugin implements MethodCallHandler {
     mRecorder.setOutputFile(mFilePath);
     mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
 
-    if(mBitRate != null)
+    if(mBitRate != 0)
     mRecorder.setAudioEncodingBitRate(mBitRate);
-    if(mSamplingInHz != null)
+    if(mSamplingInHz != 0)
       mRecorder.setAudioSamplingRate(mSamplingInHz);
 
     try {
